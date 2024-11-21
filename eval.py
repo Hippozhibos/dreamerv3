@@ -12,7 +12,8 @@ def main():
   config = embodied.Config(dreamerv3.Agent.configs['defaults'])
   config = config.update({
       **dreamerv3.Agent.configs['size100m'],
-      'logdir': f'~/logdir/{embodied.timestamp()}-example',
+    #   'logdir': f'~/logdir/{embodied.timestamp()}-example',
+      'logdir': f'~/logdir/20241117T135935-example',
       'run.train_ratio': 32,
       # 'jax.platform': 'cpu',
   })
@@ -26,6 +27,9 @@ def main():
   def make_agent(config):
     env = make_env(config)
     agent = dreamerv3.Agent(env.obs_space, env.act_space, config)
+    checkpoint = embodied.Checkpoint()
+    checkpoint.agent = agent
+    checkpoint.load('/home/zhangzhibo/logdir/20241117T135935-example/checkpoint.ckpt', keys=['agent'])
     env.close()
     return agent
 
@@ -70,11 +74,17 @@ def main():
       replay_context=config.replay_context,
   )
 
-  embodied.run.train(
+#   embodied.run.train(
+#       bind(make_agent, config),
+#       bind(make_replay, config),
+#       bind(make_env, config),
+#       bind(make_logger, config), args)
+
+  embodied.run.eval_only(
       bind(make_agent, config),
-      bind(make_replay, config),
       bind(make_env, config),
       bind(make_logger, config), args)
+
 
 
 if __name__ == '__main__':
