@@ -16,6 +16,7 @@ def main():
       'logdir': f'~/logdir/20241117T135935-example',
       'run.train_ratio': 32,
       # 'jax.platform': 'cpu',
+      'run.from_checkpoint': f'~/logdir/20241117T135935-example/checkpoint.ckpt'
   })
   config = embodied.Flags(config).parse()
 
@@ -59,9 +60,7 @@ def main():
   
   def make_env(config, env_id=0):
     from embodied.envs import dmc
-    from embodied.envs import from_dm
     env = dmc.DMC('locom_rodent_maze_forage', image=False, camera=5)
-    # env = from_dm.FromDM(env)
     env = dreamerv3.wrap_env(env, config)
     return env
 
@@ -84,8 +83,6 @@ def main():
       bind(make_agent, config),
       bind(make_env, config),
       bind(make_logger, config), args)
-
-
 
 if __name__ == '__main__':
   main()

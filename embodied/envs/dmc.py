@@ -22,6 +22,7 @@ class DMC(embodied.Env):
       self, env, repeat=1, size=(64, 64), proprio=True, image=True, camera=-1):
     if 'MUJOCO_GL' not in os.environ:
       os.environ['MUJOCO_GL'] = 'egl'
+      # os.environ['MUJOCO_GL'] = 'MUJOCO_PY'
     if isinstance(env, str):
       domain, task = env.split('_', 1)
       if camera == -1:
