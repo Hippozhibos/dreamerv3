@@ -55,7 +55,7 @@ def main():
   
   def make_env(config, env_id=0):
     from embodied.envs import dmc
-    env = dmc.DMC('locom_rodent_maze_forage', image=False, camera=5)
+    env = dmc.DMC('locom_rodent_maze_forage', image=True)
     env = dreamerv3.wrap_env(env, config)
     return env
 
