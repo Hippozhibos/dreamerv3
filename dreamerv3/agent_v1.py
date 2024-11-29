@@ -48,9 +48,9 @@ class AgentV1(nj.Module):
     self.enc = {
         'simple': bind(nets.SimpleEncoder, **config.enc.simple),
     }[config.enc.typ](enc_space, name='enc')
-    # self.dec = {
-    #     'simple': bind(nets.SimpleDecoder, **config.dec.simple),
-    # }[config.dec.typ](dec_space, name='dec')
+    self.dec = {
+        'simple': bind(nets.SimpleDecoder, **config.dec.simple),
+    }[config.dec.typ](dec_space, name='dec')
     self.dyn = {
         'rssm': bind(nets.RSSM, **config.dyn.rssm),
     }[config.dyn.typ](name='dyn')
@@ -65,15 +65,10 @@ class AgentV1(nj.Module):
     kwargs['dist'] = {
         k: config.actor_dist_disc if v.discrete else config.actor_dist_cont
         for k, v in self.act_space.items()}
-    self.actor = nets.MLP(**kwargs, **config.actor, name='actor')
+    self.actor = nets.MLP(**kwargs, **config.actor, name='actor') # 使用MLP实现actor网络
     self.retnorm = jaxutils.Moments(**config.retnorm, name='retnorm')
     self.valnorm = jaxutils.Moments(**config.valnorm, name='valnorm')
     self.advnorm = jaxutils.Moments(**config.advnorm, name='advnorm')
-
-    # Decoder (moved after actor)
-    self.dec = {
-        'simple': bind(nets.SimpleDecoder, **config.dec.simple),
-    }[config.dec.typ](dec_space, name='dec')
 
     # Critic
     self.critic = nets.MLP((), name='critic', **self.config.critic)
