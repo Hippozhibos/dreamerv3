@@ -4,6 +4,9 @@ from functools import partial as bind
 import dreamerv3
 import embodied
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
+
 warnings.filterwarnings('ignore', '.*truncated to dtype int32.*')
 
 
@@ -55,7 +58,7 @@ def main():
   
   def make_env(config, env_id=0):
     from embodied.envs import dmc
-    env = dmc.DMC('locom_rodent_maze_forage', image=True)
+    env = dmc.DMC('locom_rodent_maze_forage', image=True, camera=5)
     env = dreamerv3.wrap_env(env, config)
     return env
 
