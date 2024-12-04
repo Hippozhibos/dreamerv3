@@ -32,7 +32,7 @@ class DMC(embodied.Env):
         # camera 2: shoulder
         # camera 4: topdown tracking
         # camera 5: eyes
-        from dm_control.locomotion.examples import basic_rodent_2020
+        # from dm_control.locomotion.examples import basic_rodent_2020
         from CyberSpine.env import mice_env
         env = getattr(mice_env, task)()
       else:

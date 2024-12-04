@@ -47,6 +47,8 @@ class JAXAgent(embodied.Agent):
       assert len(available) == self.jaxcfg.assert_num_devices, (
           available, len(available), self.jaxcfg.assert_num_devices)
 
+    print('available:',available)
+
     policy_devices = [available[i] for i in self.jaxcfg.policy_devices]
     train_devices = [available[i] for i in self.jaxcfg.train_devices]
     print('Policy devices:', ', '.join([str(x) for x in policy_devices]))

@@ -3,6 +3,7 @@ from functools import partial as bind
 
 import dreamerv3
 import embodied
+import jax
 
 # import os
 # os.environ["CUDA_VISIBLE_DEVICES"]="5"
@@ -18,7 +19,10 @@ def main():
       'logdir': f'~/logdir/{embodied.timestamp()}-example',
       'run.train_ratio': 32,
       # 'jax.platform': 'cpu',
-      'run.from_checkpoint': f'~/logdir/20241202T040337-example/checkpoint.ckpt'
+      'jax.policy_devices':[1],
+      'jax.train_devices':[1],
+      'run.from_checkpoint': f'~/logdir/20241202T052500-example/checkpoint.ckpt' # camera=4
+      # 'run.from_checkpoint': f'~/logdir/20241202T040337-example/checkpoint.ckpt' # camera=2
   })
   config = embodied.Flags(config).parse()
 
