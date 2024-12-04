@@ -4,9 +4,6 @@ from functools import partial as bind
 import dreamerv3
 import embodied
 
-import os
-os.environ["CUDA_VISIBLE_DEVICES"]="6"
-
 warnings.filterwarnings('ignore', '.*truncated to dtype int32.*')
 
 
@@ -18,6 +15,8 @@ def main():
       'logdir': f'~/logdir/{embodied.timestamp()}-example',
       'run.train_ratio': 32,
       # 'jax.platform': 'cpu',
+      'jax.policy_devices':[0],
+      'jax.train_devices':[0],
   })
   config = embodied.Flags(config).parse()
 
@@ -58,7 +57,7 @@ def main():
   
   def make_env(config, env_id=0):
     from embodied.envs import dmc_v2
-    env = dmc_v2.DMC('locom_rodent_go_to_target', image=True, camera=4)
+    env = dmc_v2.DMC('locom_rodent_go_to_target', image=False, camera=2)
     env = dreamerv3.wrap_env(env, config)
     return env
 
