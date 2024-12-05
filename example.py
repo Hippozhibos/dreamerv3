@@ -19,9 +19,9 @@ def main():
       'logdir': f'~/logdir/{embodied.timestamp()}-example',
       'run.train_ratio': 32,
       # 'jax.platform': 'cpu',
-      'jax.policy_devices':[1],
-      'jax.train_devices':[1],
-      'run.from_checkpoint': f'~/logdir/20241202T052500-example/checkpoint.ckpt' # camera=4
+      'jax.policy_devices':[0],
+      'jax.train_devices':[0],
+      # 'run.from_checkpoint': f'~/logdir/20241202T052500-example/checkpoint.ckpt' # camera=4
       # 'run.from_checkpoint': f'~/logdir/20241202T040337-example/checkpoint.ckpt' # camera=2
   })
   config = embodied.Flags(config).parse()
