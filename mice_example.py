@@ -57,7 +57,7 @@ def main():
   
   def make_env(config, env_id=0):
     from embodied.envs import dmc_v2
-    env = dmc_v2.DMC('locom_rodent_go_to_target', image=False, camera=2)
+    env = dmc_v2.DMC('locom_rodent_go_to_target', image=True, camera=4)
     env = dreamerv3.wrap_env(env, config)
     return env
 
