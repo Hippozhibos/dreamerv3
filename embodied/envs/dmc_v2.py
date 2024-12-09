@@ -17,7 +17,7 @@ class DMC(embodied.Env):
     if 'MUJOCO_GL' not in os.environ:
       os.environ['MUJOCO_GL'] = 'egl'
       # os.environ['MUJOCO_GL'] = 'MUJOCO_PY'
-      # os.environ["CUDA_VISIBLE_DEVICES"] = "6"  # 可能可以指定Mujoco使用的GPU
+      os.environ["CUDA_VISIBLE_DEVICES"] = "1"  # 可能可以指定Mujoco使用的GPU
     if isinstance(env, str):
       domain, task = env.split('_', 1)
       if camera == -1:
