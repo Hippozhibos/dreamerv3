@@ -61,6 +61,9 @@ class DMC(embodied.Env):
     for key, space in self.act_space.items():
       if not space.discrete:
         assert np.isfinite(action[key]).all(), (key, action[key])
+
+    # action = action*0.1
+
     obs = self._env.step(action)
     key = 'image' if self._image else 'log_image'
     obs[key] = self._dmenv.physics.render(*self._size, camera_id=self._camera)
