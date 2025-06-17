@@ -17,7 +17,6 @@ class DMC(embodied.Env):
     if 'MUJOCO_GL' not in os.environ:
       os.environ['MUJOCO_GL'] = 'egl'
       # os.environ['MUJOCO_GL'] = 'MUJOCO_PY'
-      # os.environ["CUDA_VISIBLE_DEVICES"] = "6"  # 可能可以指定Mujoco使用的GPU
     if isinstance(env, str):
       domain, task = env.split('_', 1)
       if camera == -1:
@@ -62,6 +61,9 @@ class DMC(embodied.Env):
     for key, space in self.act_space.items():
       if not space.discrete:
         assert np.isfinite(action[key]).all(), (key, action[key])
+
+    # action = action*0.1
+
     obs = self._env.step(action)
     key = 'image' if self._image else 'log_image'
     obs[key] = self._dmenv.physics.render(*self._size, camera_id=self._camera)

@@ -12,7 +12,8 @@ def main():
   config = embodied.Config(dreamerv3.Agent.configs['defaults'])
   config = config.update({
       **dreamerv3.Agent.configs['size100m'],
-      'logdir': f'~/logdir/{embodied.timestamp()}-example',
+      # 'logdir': f'~/logdir/{embodied.timestamp()}-example',
+      'logdir': f'~/logdir/20250401T164405-example',
       'run.train_ratio': 32,
       # 'jax.platform': 'cpu',
       'jax.policy_devices':[0],
@@ -57,7 +58,7 @@ def main():
   
   def make_env(config, env_id=0):
     from embodied.envs import dmc_v2
-    env = dmc_v2.DMC('locom_rodent_go_to_target', image=True, camera=4)
+    env = dmc_v2.DMC('locom_rodent_go_to_target', image=True, camera=2)
     env = dreamerv3.wrap_env(env, config)
     return env
 
